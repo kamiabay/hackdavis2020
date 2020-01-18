@@ -1,10 +1,10 @@
 import 'package:danger/landing.dart';
+import 'package:danger/pages/onBoarding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   return runApp(Myapp());
-  //test change
 }
 class Myapp extends StatefulWidget {
   @override
@@ -28,7 +28,7 @@ class _MyappState extends State<Myapp> {
       );
   }
   mainScreen() {
-    return Landing();
+    return Onboarding();
   }
 }
 

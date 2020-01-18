@@ -1,6 +1,6 @@
-//import 'package:flutter/material.dart';
-//import 'package:flutter/cupertino.dart';
-//
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
 //class LandingRoute extends CupertinoPageRoute<Null>{
 //  LandingRoute () : super (builder: (BuildContext context){
 //    return new Landing();
@@ -79,51 +79,42 @@ import 'dart:typed_data';
 import 'package:danger/design/mydesign.dart' as design;
 import 'package:danger/style/theme.dart' as Theme;
 
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:danger/utils/bubble_indication_painter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' as service;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
-class studentSignInUpRoute extends CupertinoPageRoute<Null>{
-  String _picked_univercity;
-  studentSignInUpRoute(this._picked_univercity) : super (builder: (BuildContext context){
-    return new LoginPage(picked_univercity: _picked_univercity,);
-  });
+class LandingRoute extends CupertinoPageRoute<Null> {
+  LandingRoute()
+      : super(builder: (BuildContext context) {
+          return new Landing();
+        });
 }
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key, String this.picked_univercity}) : super(key: key);
-  String picked_univercity;
 
+class Landing extends StatefulWidget {
   @override
-  _LoginPageState createState() => new _LoginPageState(picked_univercity);
+  _LandingState createState() => _LandingState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
+class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   String _picked_univercity;
-  _LoginPageState(this._picked_univercity);
+  _LandingState();
   final FormKeyIN = GlobalKey<FormState>();
   final FormKeyUP = GlobalKey<FormState>();
 
-
   String _emailSignIn, _passwordSignIn; // sign in
 
-
-  String _emailSignUp, _passwordSignUp, _studnetIdSignUp, _fullnameSignUp, _firebase_uniqe_id; // log in
+  String _emailSignUp,
+      _passwordSignUp,
+      _studnetIdSignUp,
+      _fullnameSignUp,
+      _firebase_uniqe_id; // log in
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
-
-
-
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -134,7 +125,7 @@ class _LoginPageState extends State<LoginPage>
   final FocusNode myFocusNodeEmail = FocusNode();
   final FocusNode myFocusNodeName = FocusNode();
 
-  TextEditingController loginEmailController =  TextEditingController();
+  TextEditingController loginEmailController = TextEditingController();
   TextEditingController loginPasswordController = TextEditingController();
 
   bool _obscureTextLogin = true;
@@ -144,17 +135,18 @@ class _LoginPageState extends State<LoginPage>
   TextEditingController signupEmailController = TextEditingController();
   TextEditingController signupNameController = TextEditingController();
   TextEditingController signupPasswordController = TextEditingController();
-  TextEditingController signupConfirmPasswordController = TextEditingController();
+  TextEditingController signupConfirmPasswordController =
+      TextEditingController();
 
   PageController _pageController;
   Color left = Colors.black;
   Color right = Colors.white;
-  var paddings =  EdgeInsets.only(top: 17.5, bottom: 17.5, left: 25.0, right: 25.0);
+  var paddings =
+      EdgeInsets.only(top: 17.5, bottom: 17.5, left: 25.0, right: 25.0);
   var firestore = Firestore.instance;
-  DocumentReference FD_students,FD_students_public;
+  DocumentReference FD_students, FD_students_public;
   bool loginCanTap = true;
   bool sigupCanTap = true;
-
 
   @override
   void initState() {
@@ -165,9 +157,11 @@ class _LoginPageState extends State<LoginPage>
     ]);
     _pageController = PageController();
   }
+
   @override
   Widget build(BuildContext context) {
-    service.SystemChrome.setSystemUIOverlayStyle(service.SystemUiOverlayStyle.dark);
+    service.SystemChrome.setSystemUIOverlayStyle(
+        service.SystemUiOverlayStyle.dark);
 
     return Container(
       decoration: new BoxDecoration(
@@ -175,7 +169,6 @@ class _LoginPageState extends State<LoginPage>
             colors: [
               Theme.Colors.loginGradientStart,
               Theme.Colors.loginGradientEnd
-
             ],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 1.0),
@@ -183,12 +176,15 @@ class _LoginPageState extends State<LoginPage>
             tileMode: TileMode.clamp),
       ),
       child: new Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         key: _scaffoldKey,
         appBar: new AppBar(
           centerTitle: true,
           title: Text(
-            _picked_univercity,
+            "",
+
+            ///hhhhh
+            /// hi
             style: new TextStyle(
               color: design.appBarTextColor,
               fontSize: design.appBarTextSize,
@@ -200,7 +196,10 @@ class _LoginPageState extends State<LoginPage>
           leading: Semantics(
             label: "back button",
             child: new IconButton(
-              icon: new Icon(Icons.arrow_back_ios, color: design.backButtonColor,),
+              icon: new Icon(
+                Icons.arrow_back_ios,
+                color: design.backButtonColor,
+              ),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),
@@ -212,8 +211,9 @@ class _LoginPageState extends State<LoginPage>
           child: SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height >= 775.0 ? MediaQuery.of(context).size.height : 775.0,
-
+              height: MediaQuery.of(context).size.height >= 775.0
+                  ? MediaQuery.of(context).size.height
+                  : 775.0,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
@@ -224,8 +224,7 @@ class _LoginPageState extends State<LoginPage>
                         width: 349.0,
                         alignment: Alignment.topCenter,
                         fit: BoxFit.fill,
-                        image: new AssetImage('images/loginimage.png')
-                    ),
+                        image: new AssetImage('images/landing.png')),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 0.0),
@@ -268,6 +267,7 @@ class _LoginPageState extends State<LoginPage>
       ),
     );
   }
+
   @override
   void dispose() {
     myFocusNodePassword.dispose();
@@ -294,6 +294,7 @@ class _LoginPageState extends State<LoginPage>
       duration: Duration(seconds: 3),
     ));
   }
+
   Widget _buildMenuBar(BuildContext context) {
     return Container(
       width: 300.0,
@@ -343,6 +344,7 @@ class _LoginPageState extends State<LoginPage>
       ),
     );
   }
+
   Widget _buildSignIn(BuildContext context) {
     return ListView(
       children: <Widget>[
@@ -375,7 +377,7 @@ class _LoginPageState extends State<LoginPage>
                                   textCapitalization: TextCapitalization.none,
                                   autocorrect: false,
                                   style: TextStyle(
-                                    //fontFamily: "WorkSansSemiBold",
+                                      //fontFamily: "WorkSansSemiBold",
                                       fontSize: 16.0,
                                       color: Colors.black),
                                   decoration: InputDecoration(
@@ -387,11 +389,12 @@ class _LoginPageState extends State<LoginPage>
                                     ),
                                     hintText: "Email Address",
                                     hintStyle: TextStyle(
-                                      //fontFamily: "WorkSansSemiBold",
+                                        //fontFamily: "WorkSansSemiBold",
                                         fontSize: 17.0),
                                   ),
                                   validator: (val) {
-                                    if (!val.contains('.edu') && !val.contains('@')) {
+                                    if (!val.contains('.edu') &&
+                                        !val.contains('@')) {
                                       return "invalid Email";
                                     } else
                                       return null;
@@ -400,13 +403,11 @@ class _LoginPageState extends State<LoginPage>
                                 ),
                               ),
                             ),
-
                             Container(
                               width: 250.0,
                               height: 1.0,
                               color: Colors.grey[400],
                             ),
-
                             Semantics(
                               label: "Password",
                               child: Padding(
@@ -426,7 +427,7 @@ class _LoginPageState extends State<LoginPage>
                                   },
                                   onSaved: (val) => _passwordSignIn = val,
                                   style: TextStyle(
-                                    // fontFamily: "WorkSansSemiBold",
+                                      // fontFamily: "WorkSansSemiBold",
                                       fontSize: 16.0,
                                       color: Colors.black),
                                   decoration: InputDecoration(
@@ -438,7 +439,7 @@ class _LoginPageState extends State<LoginPage>
                                     ),
                                     hintText: "Password",
                                     hintStyle: TextStyle(
-                                      //fontFamily: "WorkSansSemiBold",
+                                        //fontFamily: "WorkSansSemiBold",
                                         fontSize: 17.0),
                                     suffixIcon: GestureDetector(
                                       onTap: _toggleLogin,
@@ -455,14 +456,12 @@ class _LoginPageState extends State<LoginPage>
                                 ),
                               ),
                             ),
-
                           ],
                         ),
                       ),
                     ),
                   ],
                 ),
-
                 Container(
                   margin: EdgeInsets.only(top: 10.0),
                   decoration: new BoxDecoration(
@@ -474,7 +473,6 @@ class _LoginPageState extends State<LoginPage>
                         offset: new Offset(1.0, 4.0),
                       ),
                     ],
-
                     gradient: new LinearGradient(
                         colors: [
                           Colors.purple[300],
@@ -485,48 +483,39 @@ class _LoginPageState extends State<LoginPage>
                         stops: [0.0, 1.0],
                         tileMode: TileMode.clamp),
                   ),
-
-
-                  child: loginCanTap? MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Theme.Colors.loginGradientEnd,
-                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
-                      child: Text(
-                        "LOGIN",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontFamily: "WorkSansBold"
-                        ),
-                      ),
-                    ),
-                    onPressed: LogInCheckSave,
-                  ):
-
-
-                  MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Theme.Colors.loginGradientEnd,
-
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 42.0),
-                        child: CircularProgressIndicator(
-
+                  child: loginCanTap
+                      ? MaterialButton(
+                          highlightColor: Colors.transparent,
+                          splashColor: Theme.Colors.loginGradientEnd,
+                          //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 42.0),
+                            child: Text(
+                              "LOGIN",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25.0,
+                                  fontFamily: "WorkSansBold"),
+                            ),
+                          ),
+                          onPressed: LogInCheckSave,
                         )
-                    ),
-                    onPressed:null,
-                  ),
+                      : MaterialButton(
+                          highlightColor: Colors.transparent,
+                          splashColor: Theme.Colors.loginGradientEnd,
+                          child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 42.0),
+                              child: CircularProgressIndicator()),
+                          onPressed: null,
+                        ),
                 ),
-
                 Padding(
                   padding: EdgeInsets.only(top: 10.0),
                   child: FlatButton(
                       onPressed: () {
-                      //  Navigator.push(context, Email_recover());
+                        //  Navigator.push(context, Email_recover());
                       },
                       child: Text(
                         "Forgot Password?",
@@ -535,10 +524,8 @@ class _LoginPageState extends State<LoginPage>
                             color: Colors.black,
                             fontSize: 16.0,
                             fontFamily: "WorkSansMedium"),
-                      )
-                  ),
+                      )),
                 ),
-
               ],
             ),
           ),
@@ -546,6 +533,7 @@ class _LoginPageState extends State<LoginPage>
       ],
     );
   }
+
   Widget _buildSignUp(BuildContext context) {
     return ListView(
       children: <Widget>[
@@ -564,7 +552,6 @@ class _LoginPageState extends State<LoginPage>
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8.0),
                       child: Container(
-
                         child: Column(
                           children: <Widget>[
                             Semantics(
@@ -572,14 +559,15 @@ class _LoginPageState extends State<LoginPage>
                               child: Padding(
                                 padding: paddings,
                                 child: TextFormField(
-                                  validator: (val){
-                                    if (val.length<2){
+                                  validator: (val) {
+                                    if (val.length < 2) {
                                       return "too small";
-                                    } else return null;
+                                    } else
+                                      return null;
                                   },
                                   onSaved: (val) => _studnetIdSignUp = val,
                                   style: TextStyle(
-                                    //fontFamily: "WorkSansSemiBold",
+                                      //fontFamily: "WorkSansSemiBold",
                                       fontSize: 16.0,
                                       color: Colors.black),
                                   decoration: InputDecoration(
@@ -590,7 +578,7 @@ class _LoginPageState extends State<LoginPage>
                                     ),
                                     hintText: "Student ID",
                                     hintStyle: TextStyle(
-                                      //fontFamily: "WorkSansSemiBold",
+                                        //fontFamily: "WorkSansSemiBold",
                                         fontSize: 16.0),
                                   ),
                                 ),
@@ -601,7 +589,6 @@ class _LoginPageState extends State<LoginPage>
                               height: 1.0,
                               color: Colors.grey[400],
                             ),
-
                             Semantics(
                               label: "Full name",
                               child: Padding(
@@ -612,13 +599,14 @@ class _LoginPageState extends State<LoginPage>
                                   keyboardType: TextInputType.text,
                                   textCapitalization: TextCapitalization.words,
                                   style: TextStyle(
-                                    //fontFamily: "WorkSansSemiBold",
+                                      //fontFamily: "WorkSansSemiBold",
                                       fontSize: 16.0,
                                       color: Colors.black),
-                                  validator: (val){
-                                    if (val.length<1){
+                                  validator: (val) {
+                                    if (val.length < 1) {
                                       return "too small";
-                                    } else return null;
+                                    } else
+                                      return null;
                                   },
                                   onSaved: (val) => _fullnameSignUp = val,
                                   decoration: InputDecoration(
@@ -629,7 +617,7 @@ class _LoginPageState extends State<LoginPage>
                                     ),
                                     hintText: "Full Name",
                                     hintStyle: TextStyle(
-                                      // fontFamily: "WorkSansSemiBold",
+                                        // fontFamily: "WorkSansSemiBold",
                                         fontSize: 16.0),
                                   ),
                                 ),
@@ -651,14 +639,14 @@ class _LoginPageState extends State<LoginPage>
                                   textCapitalization: TextCapitalization.none,
                                   autocorrect: false,
                                   style: TextStyle(
-                                    //fontFamily: "WorkSansSemiBold",
+                                      //fontFamily: "WorkSansSemiBold",
                                       fontSize: 16.0,
                                       color: Colors.black),
-                                  validator: (val){
-                                    if (!val.contains('.edu')){
+                                  validator: (val) {
+                                    if (!val.contains('.edu')) {
                                       return "invalid Email";
-                                    }
-                                    else return null;
+                                    } else
+                                      return null;
                                   },
                                   onSaved: (val) => _emailSignUp = val,
                                   decoration: InputDecoration(
@@ -669,7 +657,7 @@ class _LoginPageState extends State<LoginPage>
                                     ),
                                     hintText: "University Email Address",
                                     hintStyle: TextStyle(
-                                      //fontFamily: "WorkSansSemiBold",
+                                        //fontFamily: "WorkSansSemiBold",
                                         fontSize: 16.0),
                                   ),
                                 ),
@@ -691,13 +679,14 @@ class _LoginPageState extends State<LoginPage>
                                   textCapitalization: TextCapitalization.none,
                                   autocorrect: false,
                                   style: TextStyle(
-                                    // fontFamily: "WorkSansSemiBold",
+                                      // fontFamily: "WorkSansSemiBold",
                                       fontSize: 16.0,
                                       color: Colors.black),
-                                  validator: (val){
-                                    if (val.length<8){
+                                  validator: (val) {
+                                    if (val.length < 8) {
                                       return "Has to be 8 characters";
-                                    } else return null;
+                                    } else
+                                      return null;
                                   },
                                   onSaved: (val) => _passwordSignUp = val,
                                   decoration: InputDecoration(
@@ -708,7 +697,7 @@ class _LoginPageState extends State<LoginPage>
                                     ),
                                     hintText: "Password",
                                     hintStyle: TextStyle(
-                                      // fontFamily: "WorkSansSemiBold",
+                                        // fontFamily: "WorkSansSemiBold",
                                         fontSize: 16.0),
                                     suffixIcon: GestureDetector(
                                       onTap: _toggleSignup,
@@ -729,13 +718,8 @@ class _LoginPageState extends State<LoginPage>
                         ),
                       ),
                     ),
-
-
-
-
                   ],
                 ),
-
                 Container(
                   margin: EdgeInsets.only(top: 10.0),
                   decoration: new BoxDecoration(
@@ -757,33 +741,34 @@ class _LoginPageState extends State<LoginPage>
                         stops: [0.0, 1.0],
                         tileMode: TileMode.clamp),
                   ),
-                  child: sigupCanTap? MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Theme.Colors.loginGradientEnd,
-                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
-                      child: Text(
-                        "SIGN UP",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontFamily: "WorkSansBold"),
-                      ),
-                    ),
-                    onPressed: SignUpCheck_save,
-                  ):MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Theme.Colors.loginGradientEnd,
-                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 42.0),
-                        child: CircularProgressIndicator()
-                    ),
-                    onPressed:null,
-                  ),
+                  child: sigupCanTap
+                      ? MaterialButton(
+                          highlightColor: Colors.transparent,
+                          splashColor: Theme.Colors.loginGradientEnd,
+                          //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 42.0),
+                            child: Text(
+                              "SIGN UP",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25.0,
+                                  fontFamily: "WorkSansBold"),
+                            ),
+                          ),
+                          onPressed: SignUpCheck_save,
+                        )
+                      : MaterialButton(
+                          highlightColor: Colors.transparent,
+                          splashColor: Theme.Colors.loginGradientEnd,
+                          //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                          child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 42.0),
+                              child: CircularProgressIndicator()),
+                          onPressed: null,
+                        ),
                 ),
               ],
             ),
@@ -792,25 +777,30 @@ class _LoginPageState extends State<LoginPage>
       ],
     );
   }
+
   void _onSignInButtonPress() {
     _pageController.animateToPage(0,
         duration: Duration(milliseconds: 500), curve: Curves.decelerate);
   }
+
   void _onSignUpButtonPress() {
     _pageController?.animateToPage(1,
         duration: Duration(milliseconds: 500), curve: Curves.decelerate);
   }
+
   void _toggleLogin() {
     setState(() {
       _obscureTextLogin = !_obscureTextLogin;
     });
   }
+
   void _toggleSignup() {
     setState(() {
       _obscureTextSignup = !_obscureTextSignup;
     });
   }
-  void  LogInCheckSave() {
+
+  void LogInCheckSave() {
     final form = FormKeyIN.currentState;
     if (form.validate()) {
       setState(() {
@@ -822,19 +812,22 @@ class _LoginPageState extends State<LoginPage>
       _ensureLoggedIn();
     }
   }
+
   Future<Null> _ensureLoggedIn() async {
     _emailSignIn = _emailSignIn.toLowerCase().trim();
     SharedPreferences prefs;
     prefs = await SharedPreferences.getInstance();
 
-    AuthResult user =  await FirebaseAuth.instance.signInWithEmailAndPassword(
+    AuthResult user = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
       email: _emailSignIn,
       password: _passwordSignIn,
-    ).catchError((e){
+    )
+        .catchError((e) {
       setState(() {
         loginCanTap = true;
       });
-      showMessage("Email and password don't match",2);
+      showMessage("Email and password don't match", 2);
     });
 
 //    print("uid = " + user.user.uid.toString());
@@ -846,36 +839,39 @@ class _LoginPageState extends State<LoginPage>
       prefs.setString('uni', _picked_univercity);
       prefs.setString('loggedIn', loggedIn);
       loginCanTap = true;
-    //  Navigator.push(context, StudentPages(user.user.uid, _picked_univercity));
+      //  Navigator.push(context, StudentPages(user.user.uid, _picked_univercity));
       //print("going in");
-    }
-    else {
+    } else {
       setState(() {
         loginCanTap = true;
       });
-      showMessage("User does not exit",2);
+      showMessage("User does not exit", 2);
     }
     setState(() {
       loginCanTap = true;
     });
   }
+
   void SignUpCheck_save() async {
     final form = FormKeyUP.currentState;
-    if (form.validate()){
+    if (form.validate()) {
       setState(() {
-        sigupCanTap =false;
+        sigupCanTap = false;
         _buildSignUp(context);
       });
       form.save();
       createAcount();
     }
   }
+
   void createAcount() async {
     _emailSignUp = _emailSignUp.toLowerCase().trim();
-    AuthResult user = await _auth.createUserWithEmailAndPassword(
+    AuthResult user = await _auth
+        .createUserWithEmailAndPassword(
       email: "${_emailSignUp}",
       password: "${_passwordSignUp}",
-    ).catchError((error){
+    )
+        .catchError((error) {
       showMessage("Email already exists", 2);
       setState(() {
         sigupCanTap = true;
@@ -883,13 +879,14 @@ class _LoginPageState extends State<LoginPage>
     });
     addToDatabase(user.user.uid.toString());
   }
+
   void addToDatabase(String uid) async {
     showMessage('Creating your account please wait', 4);
     String url = '';
     bool hasPhoto = false;
     try {
       url = await uploadImage(uid);
-    } catch (e){
+    } catch (e) {
       print(e.toString());
     }
     if (url != '') {
@@ -901,25 +898,34 @@ class _LoginPageState extends State<LoginPage>
 
     WriteBatch batch = firestore.batch();
     batch.setData(
-        firestore.collection(_picked_univercity).document("Student").collection("students").document(uid),
+        firestore
+            .collection(_picked_univercity)
+            .document("Student")
+            .collection("students")
+            .document(uid),
         {
-          "full-name" : _fullnameSignUp,
+          "full-name": _fullnameSignUp,
           "email": _emailSignUp,
-          "student-id" : _studnetIdSignUp,
+          "student-id": _studnetIdSignUp,
           "firebase-id": uid,
           "university": _picked_univercity,
           "moderator": false,
           "photo-url": url,
           'hasPhoto': hasPhoto,
           _picked_univercity: true,
-          'fcmToken':'',
-        },merge: true
-    );
-    String searchKey = _fullnameSignUp[0].toUpperCase() + _fullnameSignUp[1].toUpperCase();
+          'fcmToken': '',
+        },
+        merge: true);
+    String searchKey =
+        _fullnameSignUp[0].toUpperCase() + _fullnameSignUp[1].toUpperCase();
     batch.setData(
-        firestore.collection(_picked_univercity).document("Student_public").collection("students_public").document(uid),
+        firestore
+            .collection(_picked_univercity)
+            .document("Student_public")
+            .collection("students_public")
+            .document(uid),
         {
-          "full-name" : _fullnameSignUp,
+          "full-name": _fullnameSignUp,
           "email": _emailSignUp,
           "firebase-id": uid,
           "searchKey": searchKey,
@@ -928,17 +934,17 @@ class _LoginPageState extends State<LoginPage>
           'showActivity': false,
           'searchAble': true,
           _picked_univercity: true,
-          'fcmToken':'',
-          "time-created": isoTime(),
-          "serverTime": serverTime(),
-        },merge: true
-    );
+          'fcmToken': '',
+          //"time-created": isoTime(),
+          //"serverTime": serverTime(),
+        },
+        merge: true);
     batch.setData(
         firestore.collection(_picked_univercity).document("StudentPopulation"),
         {
-          "studentPopulation": incrementOne(),
-        },merge: true
-    );
+          // "studentPopulation": incrementOne(),
+        },
+        merge: true);
 
     batch.setData(
       firestore.collection("each_university").document(uid),
@@ -947,34 +953,39 @@ class _LoginPageState extends State<LoginPage>
       },
       merge: true,
     );
-    batch.commit().then((a){
+    batch.commit().then((a) {
       sigupCanTap = true;
-      Navigator.push(context, StudentOnboardingRoute(uid, _picked_univercity));
-    }
-    ).catchError((e){
+      //Navigator.push(context, StudentOnboardingRoute(uid, _picked_univercity));
+    }).catchError((e) {
       showMessage("Something went wrong", 3);
       sigupCanTap = true;
     });
-
   }
+
   Future<Uint8List> getImageFromAssets(String path) async {
     ByteData byteData = await rootBundle.load('$path');
-    return byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
+    return byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
   }
+
   Future<String> uploadImage(String uid) async {
-    final FirebaseStorage storage = FirebaseStorage(storageBucket: 'gs://cliq-appavatar/');
+    final FirebaseStorage storage =
+        FirebaseStorage(storageBucket: 'gs://cliq-appavatar/');
     String filePath = '$_picked_univercity/publicPhoto/$uid';
     StorageReference ref = storage.ref().child(filePath);
-    StorageUploadTask uploadTask = ref.putData(await getImageFromAssets('images/pavatar.png'));
+    StorageUploadTask uploadTask =
+        ref.putData(await getImageFromAssets('images/pavatar.png'));
     var downurl = await (await uploadTask.onComplete).ref.getDownloadURL();
     String url = downurl.toString();
-    print("url :"  + url);
+    print("url :" + url);
     return url;
   }
+
   void showMessage(String s, int i) {
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
-        content: new Text(s,
+        content: new Text(
+          s,
           style: TextStyle(
             fontSize: 19.0,
           ),
@@ -984,4 +995,3 @@ class _LoginPageState extends State<LoginPage>
     );
   }
 }
-
