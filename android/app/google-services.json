@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "875992912209",
+    "firebase_url": "https://hackdavis2020-263302.firebaseio.com",
+    "project_id": "hackdavis2020-263302",
+    "storage_bucket": "hackdavis2020-263302.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875992912209:android:ed1e6c8752eb6772b20370",
+        "android_client_info": {
+          "package_name": "com.hackdavis.danger.danger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875992912209-siq9n1vlc3k7267cpvjd4sq58f7fek8p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7Vv2vPmjx9azJMBNcqw87WHarw0XdLt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875992912209-siq9n1vlc3k7267cpvjd4sq58f7fek8p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "875992912209-plj8ngcijlobn51vur3ceb1la3p68t36.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hackdavis.danger.danger"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

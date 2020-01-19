@@ -1,3 +1,4 @@
+import 'package:danger/pages/mainScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
@@ -769,14 +770,16 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
       });
     });
     print(Auth.user.uid.toString());
+    var id = Auth.user.uid.toString();
     firestore
         .collection("User")
         .document(Auth.user.uid.toString()).setData({
     "full-name": _fullnameSignUp,
       "email": _emailSignUp,
-      "UID": Auth.user.uid.toString(),
+      "UID": id,
       'fcmToken': '',
     });
+    Navigator.push(context, MainScreenRoute(id));
 
     //addToDatabase(Auth.user.uid.toString());
   }
