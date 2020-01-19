@@ -769,16 +769,17 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
         sigupCanTap = true;
       });
     });
-    print(Auth.user.uid.toString());
-    var id = Auth.user.uid.toString();
-    firestore
-        .collection("User")
-        .document(Auth.user.uid.toString()).setData({
-    "full-name": _fullnameSignUp,
-      "email": _emailSignUp,
-      "UID": id,
-      'fcmToken': '',
-    });
+
+    String id = Auth.user.uid.toString();
+    print(id);
+//    await firestore
+//        .collection("User")
+//        .document(Auth.user.uid.toString()).setData({
+//    "full-name": _fullnameSignUp,
+//      "email": _emailSignUp,
+//      "UID": id,
+//      'fcmToken': '',
+//    });
     Navigator.push(context, MainScreenRoute(id));
 
     //addToDatabase(Auth.user.uid.toString());
