@@ -1,79 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
-//class LandingRoute extends CupertinoPageRoute<Null>{
-//  LandingRoute () : super (builder: (BuildContext context){
-//    return new Landing();
-//  });
-//}
-//class Landing extends StatefulWidget {
-//  @override
-//  _LandingState createState() => _LandingState();
-//}
-//
-//class _LandingState extends State<Landing> {
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//      backgroundColor: Colors.white,
-//      appBar: AppBar(
-//        title: Text(
-//          "",
-//          style: new TextStyle(
-//            color: Colors.black,
-//            fontSize: 25.0,
-//          ),
-//        ),
-//        centerTitle: true,
-//        backgroundColor: Colors.deepPurpleAccent,
-//        elevation: 0.0,
-////        leading: new IconButton(
-////          icon: new Icon(Icons.arrow_back_ios,  color: Colors.white,),
-////          onPressed: () => Navigator.of(context).pop(),
-////        ),
-//      ),
-//      body: body(),
-//    );
-//  }
-//
-//  Widget body() {
-//    return Container(
-//      child:Column(
-//        children: <Widget>[
-//          Center(
-//              child: Container(
-//                height: 370,
-//                child: Column(
-//                  children: <Widget>[
-//                    Padding(
-//                      padding: const EdgeInsets.all(8.0),
-//                      child: Text("Lets build our city togheter",
-//                        style: TextStyle(
-//                          fontWeight: FontWeight.w500,
-//                          fontSize: 26,
-//                        ),
-//                      ),
-//                    ),
-//                    Container(
-//                      width: 350.0,
-//                      height: 310.0,
-//                      decoration: BoxDecoration(
-//                        image: DecorationImage(
-//                          fit: BoxFit.fitWidth,
-//                          image: AssetImage('images/landing.png'),
-//                        ),
-//                      ),
-//                    ),
-//                  ],
-//                ),
-//              )
-//          ),
-//        ],
-//      ),
-//    );
-//  }
-//}
-
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:danger/design/mydesign.dart' as design;
@@ -83,7 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:danger/utils/bubble_indication_painter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+//import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' as service;
 import 'package:flutter/services.dart' show rootBundle;
@@ -143,7 +69,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   Color right = Colors.white;
   var paddings =
       EdgeInsets.only(top: 17.5, bottom: 17.5, left: 25.0, right: 25.0);
-  var firestore = Firestore.instance;
+  Firestore firestore = Firestore.instance;
   DocumentReference FD_students, FD_students_public;
   bool loginCanTap = true;
   bool sigupCanTap = true;
@@ -554,41 +480,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
                       child: Container(
                         child: Column(
                           children: <Widget>[
-                            Semantics(
-                              label: "student id",
-                              child: Padding(
-                                padding: paddings,
-                                child: TextFormField(
-                                  validator: (val) {
-                                    if (val.length < 2) {
-                                      return "too small";
-                                    } else
-                                      return null;
-                                  },
-                                  onSaved: (val) => _studnetIdSignUp = val,
-                                  style: TextStyle(
-                                      //fontFamily: "WorkSansSemiBold",
-                                      fontSize: 16.0,
-                                      color: Colors.black),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    icon: Icon(
-                                      Icons.email,
-                                      color: Colors.black,
-                                    ),
-                                    hintText: "Student ID",
-                                    hintStyle: TextStyle(
-                                        //fontFamily: "WorkSansSemiBold",
-                                        fontSize: 16.0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 250.0,
-                              height: 1.0,
-                              color: Colors.grey[400],
-                            ),
+
                             Semantics(
                               label: "Full name",
                               child: Padding(
@@ -643,7 +535,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
                                       fontSize: 16.0,
                                       color: Colors.black),
                                   validator: (val) {
-                                    if (!val.contains('.edu')) {
+                                    if (!val.contains('@')) {
                                       return "invalid Email";
                                     } else
                                       return null;
@@ -655,7 +547,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
                                       FontAwesomeIcons.envelope,
                                       color: Colors.black,
                                     ),
-                                    hintText: "University Email Address",
+                                    hintText: "Email Address",
                                     hintStyle: TextStyle(
                                         //fontFamily: "WorkSansSemiBold",
                                         fontSize: 16.0),
@@ -866,121 +758,69 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
 
   void createAcount() async {
     _emailSignUp = _emailSignUp.toLowerCase().trim();
-    AuthResult user = await _auth
+    AuthResult Auth = await _auth
         .createUserWithEmailAndPassword(
       email: "${_emailSignUp}",
       password: "${_passwordSignUp}",
-    )
-        .catchError((error) {
+    ).catchError((error) {
       showMessage("Email already exists", 2);
       setState(() {
         sigupCanTap = true;
       });
     });
-    addToDatabase(user.user.uid.toString());
+    print(Auth.user.uid.toString());
+    firestore
+        .collection("User")
+        .document(Auth.user.uid.toString()).setData({
+    "full-name": _fullnameSignUp,
+      "email": _emailSignUp,
+      "UID": Auth.user.uid.toString(),
+      'fcmToken': '',
+    });
+
+    //addToDatabase(Auth.user.uid.toString());
   }
 
   void addToDatabase(String uid) async {
     showMessage('Creating your account please wait', 4);
-    String url = '';
-    bool hasPhoto = false;
-    try {
-      url = await uploadImage(uid);
-    } catch (e) {
-      print(e.toString());
-    }
-    if (url != '') {
-      hasPhoto = true;
-    } else {
-      hasPhoto = false;
-      url = '';
-    }
-
-    WriteBatch batch = firestore.batch();
-    batch.setData(
-        firestore
-            .collection(_picked_univercity)
-            .document("Student")
-            .collection("students")
-            .document(uid),
-        {
-          "full-name": _fullnameSignUp,
-          "email": _emailSignUp,
-          "student-id": _studnetIdSignUp,
-          "firebase-id": uid,
-          "university": _picked_univercity,
-          "moderator": false,
-          "photo-url": url,
-          'hasPhoto': hasPhoto,
-          _picked_univercity: true,
-          'fcmToken': '',
-        },
-        merge: true);
-    String searchKey =
-        _fullnameSignUp[0].toUpperCase() + _fullnameSignUp[1].toUpperCase();
-    batch.setData(
-        firestore
-            .collection(_picked_univercity)
-            .document("Student_public")
-            .collection("students_public")
-            .document(uid),
-        {
-          "full-name": _fullnameSignUp,
-          "email": _emailSignUp,
-          "firebase-id": uid,
-          "searchKey": searchKey,
-          "photo-url": url,
-          'hasPhoto': hasPhoto,
-          'showActivity': false,
-          'searchAble': true,
-          _picked_univercity: true,
-          'fcmToken': '',
-          //"time-created": isoTime(),
-          //"serverTime": serverTime(),
-        },
-        merge: true);
-    batch.setData(
-        firestore.collection(_picked_univercity).document("StudentPopulation"),
-        {
-          // "studentPopulation": incrementOne(),
-        },
-        merge: true);
-
-    batch.setData(
-      firestore.collection("each_university").document(uid),
-      {
-        "university": _picked_univercity,
-      },
-      merge: true,
-    );
-    batch.commit().then((a) {
-      sigupCanTap = true;
-      //Navigator.push(context, StudentOnboardingRoute(uid, _picked_univercity));
-    }).catchError((e) {
-      showMessage("Something went wrong", 3);
-      sigupCanTap = true;
+    await firestore.collection("User").document(uid).setData({
+      "full-name": _fullnameSignUp,
+      "email": _emailSignUp,
+      "UID": uid,
+      'fcmToken': '',
     });
+
+    String searchKey = _fullnameSignUp[0].toUpperCase() + _fullnameSignUp[1].toUpperCase();
+    await firestore
+        .collection("User_public")
+        .document(uid).setData({
+      "full-name": _fullnameSignUp,
+      "email": _emailSignUp,
+      "UID": uid,
+      "searchKey": searchKey,
+      'showActivity': false,
+      'searchAble': true,
+    });
+
   }
 
-  Future<Uint8List> getImageFromAssets(String path) async {
-    ByteData byteData = await rootBundle.load('$path');
-    return byteData.buffer
-        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
-  }
-
-  Future<String> uploadImage(String uid) async {
-    final FirebaseStorage storage =
-        FirebaseStorage(storageBucket: 'gs://cliq-appavatar/');
-    String filePath = '$_picked_univercity/publicPhoto/$uid';
-    StorageReference ref = storage.ref().child(filePath);
-    StorageUploadTask uploadTask =
-        ref.putData(await getImageFromAssets('images/pavatar.png'));
-    var downurl = await (await uploadTask.onComplete).ref.getDownloadURL();
-    String url = downurl.toString();
-    print("url :" + url);
-    return url;
-  }
-
+//  Future<Uint8List> getImageFromAssets(String path) async {
+//    ByteData byteData = await rootBundle.load('$path');
+//    return byteData.buffer
+//        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
+//  }
+//  Future<String> uploadImage(String uid) async {
+//    final FirebaseStorage storage =
+//        FirebaseStorage(storageBucket: 'gs://appavatar/');
+//    String filePath = '$_picked_univercity/publicPhoto/$uid';
+//    StorageReference ref = storage.ref().child(filePath);
+//    StorageUploadTask uploadTask =
+//        ref.putData(await getImageFromAssets('images/pavatar.png'));
+//    var downurl = await (await uploadTask.onComplete).ref.getDownloadURL();
+//    String url = downurl.toString();
+//    print("url :" + url);
+//    return url;
+//  }
   void showMessage(String s, int i) {
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(

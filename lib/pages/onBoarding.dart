@@ -41,8 +41,8 @@ class _OnboardingState extends State<Onboarding> {
     return IntroductionScreen(
       pages: [
         PageViewModel(
-          title: "Enage with your professor",
-          body: "Share your ideas with your lecturer, your voice needs to be heard ",
+          title: "Your city is important",
+          body: "Be a part of a bigger community that makes change easier",
           image: _buildImage('landing'),
           footer: Container(
             width: MediaQuery.of(context).size.width*0.85,
@@ -52,7 +52,7 @@ class _OnboardingState extends State<Onboarding> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
-                  child: Text("• Ask questions live during the lecture (anonymously) ",
+                  child: Text("• Easy ",
                     style: TextStyle(
                       fontSize: 13.5,
                     ),
@@ -60,7 +60,7 @@ class _OnboardingState extends State<Onboarding> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
-                  child: Text("• Up-vote the best questions so your lecturer can \n \n   address them",
+                  child: Text("• Effective",
                     style: TextStyle(
                       fontSize: 13.5,
                     ),
@@ -72,8 +72,8 @@ class _OnboardingState extends State<Onboarding> {
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Messaging (coming soon)",
-          body: "Connect with your classmates accross campus to study more effectively",
+          title: "Change your city",
+          body: "Chnages with us is much easier",
           footer: Container(
             // width: 370,
             color: Colors.transparent,
@@ -82,7 +82,7 @@ class _OnboardingState extends State<Onboarding> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
-                  child: Text("• No need to share your social media or phone number",
+                  child: Text("• Faster",
                     style: TextStyle(
                       fontSize: 13.5,
                     ),
@@ -90,7 +90,7 @@ class _OnboardingState extends State<Onboarding> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
-                  child: Text("• Increase your productivity by studying in a group",
+                  child: Text("• Better",
                     style: TextStyle(
                       fontSize: 13.5,
                     ),
@@ -98,7 +98,7 @@ class _OnboardingState extends State<Onboarding> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left:8.0,top:8),
-                  child: Text("• A professional environment for student communication",
+                  child: Text("• Stronger",
                     style: TextStyle(
                       fontSize: 13.5,
                     ),

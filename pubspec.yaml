@@ -26,10 +26,8 @@ dependencies:
   image_picker: ^0.6.1+4
   firebase_core: ^0.4.3+1
   cloud_firestore: ^0.12.11
-  firebase_database: ^3.0.0
-  firebase_storage: ^3.0.0
+#  firebase_storage: ^3.0.0
   firebase_auth: ^0.15.3
-  firebase_messaging: ^6.0.9
   shared_preferences: ^0.4.3
   bubble_bottom_bar: ^1.2.0
   introduction_screen: ^1.0.7
