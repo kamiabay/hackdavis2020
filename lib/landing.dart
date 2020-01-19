@@ -759,6 +759,8 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
 
   void createAcount() async {
     _emailSignUp = _emailSignUp.toLowerCase().trim();
+    SharedPreferences prefs;
+    prefs = await SharedPreferences.getInstance();
     AuthResult Auth = await _auth
         .createUserWithEmailAndPassword(
       email: "${_emailSignUp}",
@@ -772,16 +774,23 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
 
     String id = Auth.user.uid.toString();
     print(id);
-//    await firestore
-//        .collection("User")
-//        .document(Auth.user.uid.toString()).setData({
-//    "full-name": _fullnameSignUp,
-//      "email": _emailSignUp,
-//      "UID": id,
-//      'fcmToken': '',
-//    });
-    Navigator.push(context, MainScreenRoute(id));
+    await firestore
+        .collection("User")
+        .document(Auth.user.uid.toString()).setData({
+    "full-name": _fullnameSignUp,
+      "email": _emailSignUp,
+      "UID": id,
+      'fcmToken': '',
+    });
 
+    if (Auth.user.uid != null) {
+      String loggedIn = 'student';
+      prefs.setString('userid', Auth.user.uid);
+      prefs.setString('loggedIn', loggedIn);
+      loginCanTap = true;
+      Navigator.push(context, MainScreenRoute(id));
+      //print("going in");
+    }
     //addToDatabase(Auth.user.uid.toString());
   }
 
