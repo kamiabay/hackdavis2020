@@ -23,8 +23,8 @@ class _MainScreenState extends State<MainScreen> {
   String UID;
   final FirebaseAuth Auth = FirebaseAuth.instance;
   _MainScreenState(this.UID);
-  Completer<GoogleMapController> _controller = Completer();
-  final Map<String, Marker> _markers = {};
+  GoogleMapController mapController;
+  List<Marker> _markers = [];
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(35.42796133580664, -120.085749655962),
     zoom: 5,
@@ -101,20 +101,9 @@ class _MainScreenState extends State<MainScreen> {
               ],),
           ),
         ),
-        body: Container(
-          height: 1000,
-          width: 1000,
-          child: GoogleMap(
-            mapType: MapType.normal,
-            initialCameraPosition: _kGooglePlex,
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
-            },
-            markers: _markers.values.toSet(),
-          ),
-        ),
+        body: body(),
         floatingActionButton: FloatingActionButton(
-          onPressed: _getLocation,
+          onPressed:  _getLocation,
           tooltip: 'Get Location',
           child: Icon(Icons.flag),
         ),
@@ -128,18 +117,43 @@ class _MainScreenState extends State<MainScreen> {
       target: LatLng(currentLocation.latitude, currentLocation.longitude),
       zoom: 15,
     ));
-    _controller.future.then(
-            (GoogleMapController controller) => controller.moveCamera(camUpdate)
-    );
+    mapController.moveCamera(camUpdate);
     setState(() {
-      _markers.clear();
-      final marker = Marker(
-        markerId: MarkerId("curr_loc"),
+      _markers.add(Marker(
+        markerId: MarkerId(_markers.length.toString()),
         position: LatLng(currentLocation.latitude, currentLocation.longitude),
         infoWindow: InfoWindow(title: 'Your Location'),
         draggable: true,
-      );
-      _markers["Current Location"] = marker;
+      ));
     });
   }
+
+ Widget body() {
+    return Stack(
+     children: <Widget>[
+       Container(
+         child: GoogleMap(
+            markers: _markers.toSet(),
+             initialCameraPosition: _kGooglePlex,
+             onMapCreated: _onMapCreated,
+             myLocationEnabled: true, // Add little blue dot for device location, requires permission from user
+             mapType: MapType.normal,
+            // trackCameraPosition: true
+         ),
+       ),
+
+       Container(
+
+       ),
+     ],
+    );
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    setState(() {
+      mapController = controller;
+    });
+  }
+
+
 }
