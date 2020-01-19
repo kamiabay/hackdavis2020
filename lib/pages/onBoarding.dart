@@ -1,4 +1,4 @@
-import 'package:danger/landing.dart';
+import 'package:danger/Sign_In_Up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';

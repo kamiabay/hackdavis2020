@@ -45,6 +45,7 @@ class _MainScreenState extends State<MainScreen> {
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0.0,
+          iconTheme: new IconThemeData(color: Colors.red),
         ),
         drawer: Drawer(
           child:  Container(

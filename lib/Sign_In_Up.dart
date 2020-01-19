@@ -16,6 +16,8 @@ import 'package:flutter/services.dart' as service;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'pages/screenPicker.dart';
+
 class LandingRoute extends CupertinoPageRoute<Null> {
   LandingRoute()
       : super(builder: (BuildContext context) {
@@ -777,7 +779,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
     await firestore
         .collection("User")
         .document(Auth.user.uid.toString()).setData({
-    "full-name": _fullnameSignUp,
+     "full-name": _fullnameSignUp,
       "email": _emailSignUp,
       "UID": id,
       'fcmToken': '',
@@ -788,7 +790,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
       prefs.setString('userid', Auth.user.uid);
       prefs.setString('loggedIn', loggedIn);
       loginCanTap = true;
-      Navigator.push(context, MainScreenRoute(id));
+      Navigator.push(context, ScreenPickerRoute(id));
       //print("going in");
     }
     //addToDatabase(Auth.user.uid.toString());

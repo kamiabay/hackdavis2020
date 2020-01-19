@@ -1,9 +1,11 @@
-import 'package:danger/landing.dart';
+
 import 'package:danger/pages/mainScreen.dart';
 import 'package:danger/pages/onBoarding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'pages/screenPicker.dart';
 
 void main() {
   return runApp(Myapp());
@@ -56,7 +58,7 @@ class _MyappState extends State<Myapp> {
     if (loggedIn == 'none'){
       return Onboarding();
     }else {
-      return MainScreen(userUid);
+      return MainPages(userUid);
     }
 
   }
