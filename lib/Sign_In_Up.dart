@@ -153,7 +153,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
                         width: 349.0,
                         alignment: Alignment.topCenter,
                         fit: BoxFit.fill,
-                        image: new AssetImage('images/landing.png')),
+                        image: new AssetImage('images/girl.png')),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 0.0),
@@ -713,7 +713,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
     SharedPreferences prefs;
     prefs = await SharedPreferences.getInstance();
 
-    AuthResult user = await FirebaseAuth.instance
+    AuthResult Auth = await FirebaseAuth.instance
         .signInWithEmailAndPassword(
       email: _emailSignIn,
       password: _passwordSignIn,
@@ -725,17 +725,13 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
       showMessage("Email and password don't match", 2);
     });
 
-//    print("uid = " + user.user.uid.toString());
-//    print("email verified?? = " + user.user.isEmailVerified.toString());
-//    print("email verified?? = " + user.user.isEmailVerified.toString());
-    if (user.user.uid != null) {
-      String loggedIn = 'student';
-      prefs.setString('userid', user.user.uid);
-      prefs.setString('uni', _picked_univercity);
+
+    if (Auth.user.uid != null) {
+      String loggedIn = 'true';
+      prefs.setString('userid', Auth.user.uid);
       prefs.setString('loggedIn', loggedIn);
       loginCanTap = true;
-      //  Navigator.push(context, StudentPages(user.user.uid, _picked_univercity));
-      //print("going in");
+      Navigator.push(context, ScreenPickerRoute(Auth.user.uid));
     } else {
       setState(() {
         loginCanTap = true;
@@ -779,19 +775,17 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
     await firestore
         .collection("User")
         .document(Auth.user.uid.toString()).setData({
-     "full-name": _fullnameSignUp,
+     "fullName": _fullnameSignUp,
       "email": _emailSignUp,
       "UID": id,
-      'fcmToken': '',
     });
 
     if (Auth.user.uid != null) {
-      String loggedIn = 'student';
+      String loggedIn = 'true';
       prefs.setString('userid', Auth.user.uid);
       prefs.setString('loggedIn', loggedIn);
       loginCanTap = true;
       Navigator.push(context, ScreenPickerRoute(id));
-      //print("going in");
     }
     //addToDatabase(Auth.user.uid.toString());
   }

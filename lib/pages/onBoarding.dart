@@ -43,29 +43,29 @@ class _OnboardingState extends State<Onboarding> {
         PageViewModel(
           title: "Your city is important",
           body: "Be a part of a bigger community that makes change easier",
-          image: _buildImage('landing'),
+          image: _buildImage('walking'),
           footer: Container(
             width: MediaQuery.of(context).size.width*0.85,
             color: Colors.transparent,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
-                  child: Text("• Easy ",
-                    style: TextStyle(
-                      fontSize: 13.5,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
-                  child: Text("• Effective",
-                    style: TextStyle(
-                      fontSize: 13.5,
-                    ),
-                  ),
-                ),
+//                Padding(
+//                  padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
+//                  child: Text("• Easy ",
+//                    style: TextStyle(
+//                      fontSize: 13.5,
+//                    ),
+//                  ),
+//                ),
+//                Padding(
+//                  padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
+//                  child: Text("• Effective",
+//                    style: TextStyle(
+//                      fontSize: 13.5,
+//                    ),
+//                  ),
+//                ),
               ],
             ),
           ),
@@ -73,37 +73,37 @@ class _OnboardingState extends State<Onboarding> {
         ),
         PageViewModel(
           title: "Change your city",
-          body: "Chnages with us is much easier",
+          body: "Change with us is much easier",
           footer: Container(
             // width: 370,
             color: Colors.transparent,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
-                  child: Text("• Faster",
-                    style: TextStyle(
-                      fontSize: 13.5,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
-                  child: Text("• Better",
-                    style: TextStyle(
-                      fontSize: 13.5,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left:8.0,top:8),
-                  child: Text("• Stronger",
-                    style: TextStyle(
-                      fontSize: 13.5,
-                    ),
-                  ),
-                ),
+//                Padding(
+//                  padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
+//                  child: Text("• Faster",
+//                    style: TextStyle(
+//                      fontSize: 13.5,
+//                    ),
+//                  ),
+//                ),
+//                Padding(
+//                  padding: const EdgeInsets.only(left:8.0,top:8,bottom: 8),
+//                  child: Text("• Better",
+//                    style: TextStyle(
+//                      fontSize: 13.5,
+//                    ),
+//                  ),
+//                ),
+//                Padding(
+//                  padding: const EdgeInsets.only(left:8.0,top:8),
+//                  child: Text("• Stronger",
+//                    style: TextStyle(
+//                      fontSize: 13.5,
+//                    ),
+//                  ),
+//                ),
               ],
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:danger/pages/feed.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Bottom_NavBar.dart';
@@ -45,7 +46,7 @@ class _MainPagesState extends State<MainPages> {
         body: PageView(
           children: <Widget>[
             MainScreen(UID),
-
+            Feed(UID),
           ],
           controller: pageController,
           onPageChanged: onPageChanged(pageindex),
