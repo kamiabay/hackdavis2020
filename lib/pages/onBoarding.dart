@@ -2,7 +2,7 @@ import 'package:danger/Sign_In_Up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-
+import 'package:flutter/services.dart' as service;
 
 class OnboardingRoute extends CupertinoPageRoute<Null>{
 
@@ -28,6 +28,7 @@ class _OnboardingState extends State<Onboarding> {
   }
   @override
   Widget build(BuildContext context) {
+    service.SystemChrome.setSystemUIOverlayStyle(service.SystemUiOverlayStyle.dark);
     const bodyStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500,
       color: Color(0xff1f1345),
     );

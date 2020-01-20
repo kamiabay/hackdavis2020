@@ -4,10 +4,17 @@ import 'package:danger/pages/onBoarding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter/services.dart' as service;
 import 'pages/screenPicker.dart';
 
 void main() {
+//  service.SystemChrome.setSystemUIOverlayStyle(service.SystemUiOverlayStyle(
+//    statusBarIconBrightness: Brightness.dark,
+//    statusBarColor: Colors.red,
+//    systemNavigationBarIconBrightness: Brightness.dark,
+//    systemNavigationBarColor: Colors.red,
+//   ),
+//  );
   return runApp(Myapp());
 }
 class Myapp extends StatefulWidget {

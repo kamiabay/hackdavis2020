@@ -10,7 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:danger/utils/bubble_indication_painter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' as service;
 import 'package:flutter/services.dart' show rootBundle;
@@ -80,6 +80,8 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    service.SystemChrome.setSystemUIOverlayStyle(
+        service.SystemUiOverlayStyle.dark);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -216,7 +218,6 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
         style: TextStyle(
           color: Colors.white,
           fontSize: 16.0,
-//            fontFamily: "WorkSansSemiBold"
         ),
       ),
       backgroundColor: Colors.blue,
@@ -769,67 +770,59 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
         sigupCanTap = true;
       });
     });
-
-    String id = Auth.user.uid.toString();
-    print(id);
-    await firestore
-        .collection("User")
-        .document(Auth.user.uid.toString()).setData({
-     "fullName": _fullnameSignUp,
-      "email": _emailSignUp,
-      "UID": id,
-    });
-
-    if (Auth.user.uid != null) {
-      String loggedIn = 'true';
-      prefs.setString('userid', Auth.user.uid);
-      prefs.setString('loggedIn', loggedIn);
-      loginCanTap = true;
-      Navigator.push(context, ScreenPickerRoute(id));
-    }
-    //addToDatabase(Auth.user.uid.toString());
+    String uid = Auth.user.uid.toString();
+    addToDatabase(uid);
   }
 
   void addToDatabase(String uid) async {
     showMessage('Creating your account please wait', 4);
+    String url = '';
+    bool hasPhoto = false;
+    try {
+      url = await uploadImage(uid);
+    } catch (e){
+      print(e.toString());
+    }
+    if (url != '') {
+      hasPhoto = true;
+    } else {
+      hasPhoto = false;
+      url = '';
+    }
     await firestore.collection("User").document(uid).setData({
-      "full-name": _fullnameSignUp,
+      "fullName": _fullnameSignUp,
       "email": _emailSignUp,
       "UID": uid,
-      'fcmToken': '',
-    });
-
-    String searchKey = _fullnameSignUp[0].toUpperCase() + _fullnameSignUp[1].toUpperCase();
-    await firestore
-        .collection("User_public")
-        .document(uid).setData({
-      "full-name": _fullnameSignUp,
-      "email": _emailSignUp,
-      "UID": uid,
-      "searchKey": searchKey,
-      'showActivity': false,
-      'searchAble': true,
-    });
-
+      "photo-url": url,
+      'hasPhoto': hasPhoto,
+      "serverTime": FieldValue.serverTimestamp(),
+    },merge: true);
+    sigupCanTap = true;
+    SharedPreferences prefs;
+    prefs = await SharedPreferences.getInstance();
+    String loggedIn = 'true';
+    prefs.setString('userid', uid);
+    prefs.setString('loggedIn', loggedIn);
+    loginCanTap = true;
+    Navigator.push(context, ScreenPickerRoute(uid));
   }
-
-//  Future<Uint8List> getImageFromAssets(String path) async {
-//    ByteData byteData = await rootBundle.load('$path');
-//    return byteData.buffer
-//        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
-//  }
-//  Future<String> uploadImage(String uid) async {
-//    final FirebaseStorage storage =
-//        FirebaseStorage(storageBucket: 'gs://appavatar/');
-//    String filePath = '$_picked_univercity/publicPhoto/$uid';
-//    StorageReference ref = storage.ref().child(filePath);
-//    StorageUploadTask uploadTask =
-//        ref.putData(await getImageFromAssets('images/pavatar.png'));
-//    var downurl = await (await uploadTask.onComplete).ref.getDownloadURL();
-//    String url = downurl.toString();
-//    print("url :" + url);
-//    return url;
-//  }
+  Future<Uint8List> getImageFromAssets(String path) async {
+    ByteData byteData = await rootBundle.load('$path');
+    return byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
+  }
+  Future<String> uploadImage(String uid) async {
+    final FirebaseStorage storage =
+        FirebaseStorage(storageBucket: 'gs://hackdavis2020-263302.appspot.com/');
+    String filePath = 'publicPhoto/$uid';
+    StorageReference ref = storage.ref().child(filePath);
+    StorageUploadTask uploadTask =
+        ref.putData(await getImageFromAssets('images/pavatar.png'));
+    var downurl = await (await uploadTask.onComplete).ref.getDownloadURL();
+    String url = downurl.toString();
+    print("url :" + url);
+    return url;
+  }
   void showMessage(String s, int i) {
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(

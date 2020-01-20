@@ -1,5 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+Widget Spiner() {
+  return Container(
+    child: Center(
+      child: SpinKitRotatingCircle(
+        color: Colors.purple[300],
+        size: 50.0,
+      ),
+    ),
+  );
+}
 Widget myAppBar(String txt,BuildContext context) {
   return  AppBar(
     title: Text(
